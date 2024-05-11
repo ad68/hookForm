@@ -6,13 +6,15 @@ import React, { useState, useContext, useEffect } from "react";
 // ────────────────────────────────────────────────────────────────────
 //
 
-export default function Index({ register, defaultValue }) {
+export default function Index({ defaultValue, className, register, ...rest }) {
   // ─── Global Variable ────────────────────────────────────────────────────────────
 
   // ─── States ─────────────────────────────────────────────────────────────────────
 
   // ─── Life Cycle ─────────────────────────────────────────────────────────────────
-
+  useEffect(() => {
+    console.log(className);
+  }, []);
   // ─── Functions ──────────────────────────────────────────────────────────────────
 
   //
@@ -20,5 +22,10 @@ export default function Index({ register, defaultValue }) {
   //   :::::: R E N D E R : :  :   :    :     :        :          :
   // ──────────────────────────────────────────────────────────────
   //
-  return <input defaultValue={defaultValue} type="text" {...register} />;
+  return <input className={`border border-silver p-4 rounded-md ${className && String(className)}`} defaultValue={defaultValue} type="text" {...register} {...rest} />;
 }
+
+/* export default function Index({ register, defaultValue }) {
+ 
+  return <input className="border border-silver p-4 rounded-md" defaultValue={defaultValue} type="text" {...register} />;
+} */

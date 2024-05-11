@@ -1,7 +1,7 @@
 "use client";
-import { useForm } from "react-hook-form";
+import { useForm, useController } from "react-hook-form";
 import MyInput from "./components/MyInput";
-import { useState } from "react";
+import { useEffect } from "react";
 export default function App() {
   const {
     register,
@@ -12,20 +12,18 @@ export default function App() {
 
   const onSubmit = (data) => console.log(data);
 
-  console.log(watch("exampleRequired")); // watch input value by passing the name of it
-
+  useEffect(() => {
+    console.log("Watched");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch("lastName")]);
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {/* register your input into the hook by invoking the "register" function */}
-        <input className="border" defaultValue="test" {...register("example")} />
-        <MyInput defaultValue="ali" register={{ ...register("exampleRequired", { required: true }) }} />
-        {/* include validation with required or other standard HTML validation rules */}
-        {/*   <input className="border" {...register("exampleRequired", { required: true })} /> */}
-        {/* errors will return when field validation fails  */}
-        {errors.exampleRequired && <span className="text-red-400">This field is required</span>}
-
-        <input type="submit" className="ml-2 bg-red-400 px-3 rounded-sm text-white" />
+      <form className="flex flex-col w-[400px] m-12" onSubmit={handleSubmit(onSubmit)}>
+        <MyInput register={{ ...register("firstName", { required: true }) }} />
+        {errors.firstName && <span className="text-red-400">This field is required</span>}
+        <MyInput className="mt-4" register={{ ...register("lastName", { required: true }) }} />
+        {errors.lastName && <span className="text-red-400">This field is required</span>}
+        <input type="submit" className="mt-4 p-5 rounded-lg bg-red-400 px-3  text-white" />
       </form>
     </>
   );
